@@ -12,30 +12,12 @@ This project leverages AI to create intelligent automation scripts and custom da
 homeassistant-ai/
 ├── automations/       # Home Assistant automation scripts
 ├── dashboards/        # Custom dashboard configurations
-├── scripts/           # Utility scripts for Home Assistant
-└── docs/             # Documentation and examples
 ```
 
 ## Features
 
 - **AI-Generated Automations**: Smart automation scripts that learn from patterns and optimize home behavior
 - **Custom Dashboard Scripts**: Enhanced UI components and layouts for Home Assistant dashboards
-- **Intelligent Scene Management**: Dynamic scene creation based on time, occupancy, and environmental factors
-- **Energy Optimization**: Scripts focused on reducing energy consumption while maintaining comfort
-- **Security Automations**: Advanced security patterns and alert systems
-
-## Getting Started
-
-1. Clone this repository to your Home Assistant configuration directory
-2. Copy desired automation scripts to your `automations.yaml` or include them via packages
-3. Implement dashboard configurations through the Home Assistant UI or YAML mode
-4. Customize scripts according to your specific device entities and preferences
-
-## Requirements
-
-- Home Assistant 2024.1 or newer
-- YAML configuration knowledge
-- Basic understanding of Home Assistant entities and services
 
 ## Contributing
 
