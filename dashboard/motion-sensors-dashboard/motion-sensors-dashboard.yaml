@@ -1,0 +1,347 @@
+views:
+  - title: Motion Sensors
+    icon: mdi:motion-sensor
+    panel: false
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Motion Sensors
+            secondary: >-
+              {{ states.binary_sensor | selectattr('attributes.device_class',
+              'eq', 'motion') | list | length }} Total
+            icon: mdi:motion-sensor
+            icon_color: blue
+            card_mod:
+              style: |
+                ha-card {
+                  --ha-card-background: rgba(var(--rgb-primary-color), 0.1);
+                }
+          - type: custom:mushroom-template-card
+            primary: Active
+            secondary: >-
+              {{ states.binary_sensor | selectattr('attributes.device_class',
+              'eq', 'motion') | selectattr('state', 'eq', 'on') | list | length
+              }} Detecting
+            icon: mdi:run
+            icon_color: red
+            card_mod:
+              style: |
+                ha-card {
+                  --ha-card-background: rgba(var(--rgb-red), 0.1);
+                }
+      - type: custom:layout-card
+        layout_type: masonry
+        layout:
+          width: 300
+          max_cols: 4
+        cards:
+          - type: custom:mushroom-title-card
+            title: Living Room
+          - type: custom:button-card
+            entity: binary_sensor.motion_sensor_living_room_1
+            name: Motion Sensor 1
+            show_last_changed: true
+            styles:
+              card:
+                - height: 120px
+              icon:
+                - color: |
+                    [[[
+                      return entity.state === 'on' ? '#ff5252' : '#44739e';
+                    ]]]
+                - animation: |
+                    [[[
+                      return entity.state === 'on' ? 'blink 1s ease infinite' : 'none';
+                    ]]]
+            state:
+              - value: 'on'
+                name: Motion Detected!
+                icon: mdi:motion-sensor
+              - value: 'off'
+                name: No Motion
+                icon: mdi:motion-sensor-off
+          - type: custom:button-card
+            entity: binary_sensor.motion_sensor_living_room_2
+            name: Motion Sensor 2
+            show_last_changed: true
+            styles:
+              card:
+                - height: 120px
+              icon:
+                - color: |
+                    [[[
+                      return entity.state === 'on' ? '#ff5252' : '#44739e';
+                    ]]]
+                - animation: |
+                    [[[
+                      return entity.state === 'on' ? 'blink 1s ease infinite' : 'none';
+                    ]]]
+            state:
+              - value: 'on'
+                name: Motion Detected!
+                icon: mdi:motion-sensor
+              - value: 'off'
+                name: No Motion
+                icon: mdi:motion-sensor-off
+          - type: custom:mushroom-title-card
+            title: Bedroom
+          - type: custom:button-card
+            entity: binary_sensor.motion_sensor_bedroom
+            name: Bedroom Sensor
+            show_last_changed: true
+            styles:
+              card:
+                - height: 120px
+              icon:
+                - color: |
+                    [[[
+                      return entity.state === 'on' ? '#ff5252' : '#44739e';
+                    ]]]
+                - animation: |
+                    [[[
+                      return entity.state === 'on' ? 'blink 1s ease infinite' : 'none';
+                    ]]]
+            state:
+              - value: 'on'
+                name: Motion Detected!
+                icon: mdi:motion-sensor
+              - value: 'off'
+                name: No Motion
+                icon: mdi:motion-sensor-off
+          - type: custom:mushroom-title-card
+            title: Kids Room
+          - type: custom:button-card
+            entity: binary_sensor.motion_sensor_kids_room
+            name: Kids Room Sensor
+            show_last_changed: true
+            styles:
+              card:
+                - height: 120px
+              icon:
+                - color: |
+                    [[[
+                      return entity.state === 'on' ? '#ff5252' : '#44739e';
+                    ]]]
+                - animation: |
+                    [[[
+                      return entity.state === 'on' ? 'blink 1s ease infinite' : 'none';
+                    ]]]
+            state:
+              - value: 'on'
+                name: Motion Detected!
+                icon: mdi:motion-sensor
+              - value: 'off'
+                name: No Motion
+                icon: mdi:motion-sensor-off
+          - type: custom:mushroom-title-card
+            title: Bathroom
+          - type: custom:button-card
+            entity: binary_sensor.motion_sensor_bathroom_1
+            name: Bathroom Sensor 1
+            show_last_changed: true
+            styles:
+              card:
+                - height: 120px
+              icon:
+                - color: |
+                    [[[
+                      return entity.state === 'on' ? '#ff5252' : '#44739e';
+                    ]]]
+                - animation: |
+                    [[[
+                      return entity.state === 'on' ? 'blink 1s ease infinite' : 'none';
+                    ]]]
+            state:
+              - value: 'on'
+                name: Motion Detected!
+                icon: mdi:motion-sensor
+              - value: 'off'
+                name: No Motion
+                icon: mdi:motion-sensor-off
+          - type: custom:button-card
+            entity: binary_sensor.motion_sensor_bathroom_2
+            name: Bathroom Sensor 2
+            show_last_changed: true
+            styles:
+              card:
+                - height: 120px
+              icon:
+                - color: |
+                    [[[
+                      return entity.state === 'on' ? '#ff5252' : '#44739e';
+                    ]]]
+                - animation: |
+                    [[[
+                      return entity.state === 'on' ? 'blink 1s ease infinite' : 'none';
+                    ]]]
+            state:
+              - value: 'on'
+                name: Motion Detected!
+                icon: mdi:motion-sensor
+              - value: 'off'
+                name: No Motion
+                icon: mdi:motion-sensor-off
+          - type: custom:mushroom-title-card
+            title: Hallway
+          - type: custom:button-card
+            entity: binary_sensor.motion_sensor_hallway
+            name: Hallway Sensor
+            show_last_changed: true
+            styles:
+              card:
+                - height: 120px
+              icon:
+                - color: |
+                    [[[
+                      return entity.state === 'on' ? '#ff5252' : '#44739e';
+                    ]]]
+                - animation: |
+                    [[[
+                      return entity.state === 'on' ? 'blink 1s ease infinite' : 'none';
+                    ]]]
+            state:
+              - value: 'on'
+                name: Motion Detected!
+                icon: mdi:motion-sensor
+              - value: 'off'
+                name: No Motion
+                icon: mdi:motion-sensor-off
+          - type: custom:mushroom-title-card
+            title: Security Cameras
+          - type: custom:button-card
+            entity: binary_sensor.security_camera_1_motion
+            name: Camera 1
+            show_last_changed: true
+            styles:
+              card:
+                - height: 120px
+              icon:
+                - color: |
+                    [[[
+                      return entity.state === 'on' ? '#ff5252' : '#44739e';
+                    ]]]
+                - animation: |
+                    [[[
+                      return entity.state === 'on' ? 'blink 1s ease infinite' : 'none';
+                    ]]]
+            state:
+              - value: 'on'
+                name: Motion Detected!
+                icon: mdi:cctv
+              - value: 'off'
+                name: No Motion
+                icon: mdi:cctv-off
+          - type: custom:button-card
+            entity: binary_sensor.security_camera_2_motion
+            name: Camera 2
+            show_last_changed: true
+            styles:
+              card:
+                - height: 120px
+              icon:
+                - color: |
+                    [[[
+                      return entity.state === 'on' ? '#ff5252' : '#44739e';
+                    ]]]
+                - animation: |
+                    [[[
+                      return entity.state === 'on' ? 'blink 1s ease infinite' : 'none';
+                    ]]]
+            state:
+              - value: 'on'
+                name: Motion Detected!
+                icon: mdi:cctv
+              - value: 'off'
+                name: No Motion
+                icon: mdi:cctv-off
+          - type: custom:mushroom-title-card
+            title: Other Sensors
+          - type: custom:button-card
+            entity: binary_sensor.motion_sensor_pir_1
+            name: PIR Sensor 1
+            show_last_changed: true
+            styles:
+              card:
+                - height: 120px
+              icon:
+                - color: |
+                    [[[
+                      return entity.state === 'on' ? '#ff5252' : '#44739e';
+                    ]]]
+                - animation: |
+                    [[[
+                      return entity.state === 'on' ? 'blink 1s ease infinite' : 'none';
+                    ]]]
+            state:
+              - value: 'on'
+                name: Motion Detected!
+                icon: mdi:motion-sensor
+              - value: 'off'
+                name: No Motion
+                icon: mdi:motion-sensor-off
+          - type: custom:button-card
+            entity: binary_sensor.motion_sensor_pir_2
+            name: PIR Sensor 2
+            show_last_changed: true
+            styles:
+              card:
+                - height: 120px
+              icon:
+                - color: |
+                    [[[
+                      return entity.state === 'on' ? '#ff5252' : '#44739e';
+                    ]]]
+                - animation: |
+                    [[[
+                      return entity.state === 'on' ? 'blink 1s ease infinite' : 'none';
+                    ]]]
+            state:
+              - value: 'on'
+                name: Motion Detected!
+                icon: mdi:motion-sensor
+              - value: 'off'
+                name: No Motion
+                icon: mdi:motion-sensor-off
+      - type: custom:mushroom-title-card
+        title: Recent Motion Activity
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Last Motion Detected
+        filter:
+          include:
+            - attributes:
+                device_class: motion
+          exclude:
+            - state: unavailable
+        sort:
+          method: last_changed
+          reverse: true
+        show_empty: false
+      - type: custom:mini-graph-card
+        name: Motion Activity (24h)
+        hours_to_show: 24
+        points_per_hour: 4
+        line_width: 2
+        smoothing: false
+        aggregate_func: max
+        entities:
+          - entity: binary_sensor.motion_sensor_living_room_1
+            name: Living Room
+            color: '#44739e'
+          - entity: binary_sensor.motion_sensor_bathroom_1
+            name: Bathroom
+            color: '#f44336'
+          - entity: binary_sensor.motion_sensor_bedroom
+            name: Bedroom
+            color: '#4caf50'
+          - entity: binary_sensor.motion_sensor_hallway
+            name: Hallway
+            color: '#9c27b0'
+        show:
+          state: false
+          name: true
+          icon: false
+          labels: true
+          points: false
