@@ -1,0 +1,141 @@
+#########################################################################
+# Motion Detection When Away - Home Assistant Automation Template
+#########################################################################
+# 
+# This automation sends notifications when any motion sensor is triggered
+# while your home alarm system is set to "away" mode.
+#
+# SETUP REQUIRED:
+# 1. Replace all entity IDs with your actual motion sensor entities
+# 2. Configure your alarm system condition 
+# 3. Set up your notification service
+# 4. Update area IDs for light control (optional)
+# 5. Test the automation
+#
+# Compatible with: Camera motion sensors, PIR sensors, Aqara occupancy sensors
+# Tested on: Home Assistant 2024.x
+#########################################################################
+
+id: motion_detection_when_away
+alias: "Motion Detection When Away - Template"
+description: "Send notification when motion is detected and alarm is set to away mode"
+
+trigger:
+  # Camera Motion Sensors - Replace with your actual camera motion sensor entity IDs
+  - platform: state
+    entity_id: binary_sensor.camera_1_motion
+    to: 'on'
+    id: "camera_1_motion"
+  - platform: state
+    entity_id: binary_sensor.camera_2_motion
+    to: 'on'
+    id: "camera_2_motion"
+    
+  # Room Motion Sensors - Replace with your actual motion sensor entity IDs
+  - platform: state
+    entity_id: binary_sensor.hallway_motion
+    to: 'on'
+    id: "hallway_motion"
+  - platform: state
+    entity_id: binary_sensor.living_room_motion
+    to: 'on'
+    id: "living_room_motion"
+    
+  # Bathroom Motion Sensors - Replace with your actual entity IDs
+  - platform: state
+    entity_id: binary_sensor.bathroom_motion
+    to: 'on'
+    id: "bathroom_motion"
+    
+  # Kitchen Motion Sensors - Replace with your actual entity IDs
+  - platform: state
+    entity_id: binary_sensor.kitchen_motion
+    to: 'on'
+    id: "kitchen_motion"
+    
+  # Bedroom Motion Sensors - Replace with your actual entity IDs
+  - platform: state
+    entity_id: binary_sensor.bedroom_motion
+    to: 'on'
+    id: "bedroom_motion"
+    
+  # Outdoor Motion Sensors - Replace with your actual entity IDs
+  - platform: state
+    entity_id: binary_sensor.outdoor_motion
+    to: 'on'
+    id: "outdoor_motion"
+    
+  # Aqara Occupancy Sensors - Replace with your actual Aqara sensor entity IDs
+  # Format: binary_sensor.0x[your_device_id]_occupancy
+  - platform: state
+    entity_id: binary_sensor.0x[your_aqara_device_id_1]_occupancy
+    to: 'on'
+    id: "aqara_living_room"
+  - platform: state
+    entity_id: binary_sensor.0x[your_aqara_device_id_2]_occupancy
+    to: 'on'
+    id: "aqara_bathroom"
+  - platform: state
+    entity_id: binary_sensor.0x[your_aqara_device_id_3]_occupancy
+    to: 'on'
+    id: "aqara_bedroom"
+    
+  # Add more motion sensors as needed:
+  # - platform: state
+  #   entity_id: binary_sensor.your_motion_sensor
+  #   to: 'on'
+  #   id: "your_motion_sensor_id"
+    
+condition:
+  # Only trigger when alarm is set to away mode
+  # REPLACE WITH YOUR ACTUAL ALARM SYSTEM ENTITY AND STATE
+  - condition: state
+    entity_id: alarm_control_panel.your_alarm_system  # Replace with your alarm entity
+    state: 'armed_away'
+    # Alternative conditions based on your alarm setup:
+    # Option 1: Input Boolean
+    # entity_id: input_boolean.away_mode
+    # state: 'on'
+    # Option 2: Scene-based alarm
+    # entity_id: scene.alarm_away
+    # state: 'on'
+    # Option 3: Custom alarm integration
+    # entity_id: binary_sensor.house_occupied
+    # state: 'off'  # inverse logic
+
+action:
+  - service: notify.notify  # Replace with your notification service
+    data:
+      title: "🚨 Motion Detected While Away!"
+      message: >
+        Motion detected by {{ trigger.id | replace('_', ' ') | title }} 
+        at {{ now().strftime('%H:%M:%S') }}.
+        Location: {{ state_attr(trigger.entity_id, 'friendly_name') or trigger.entity_id }}
+      # For mobile app notifications
+      tag: "motion_alert"
+      group: "security"
+      priority: "high"
+      ttl: 0
+      # For persistent notification
+      persistent: true
+        
+  # Optional: Turn on lights or activate additional security measures
+  - service: light.turn_on
+    target:
+      area_id: 
+        - hallway
+        - living_room
+        # Add your actual area IDs here
+    data:
+      brightness: 255
+      color_name: "red"
+      
+  # Optional: Log the event
+  - service: logbook.log
+    data:
+      name: "Security Alert"
+      message: "Motion detected by {{ trigger.id }} while away"
+      entity_id: "{{ trigger.entity_id }}"
+      
+mode: parallel  # Allow multiple simultaneous motion detections
+max: 10  # Maximum 10 parallel executions

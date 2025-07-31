@@ -10,14 +10,37 @@ This project leverages AI to create intelligent automation scripts and custom da
 
 ```
 homeassistant-ai/
-├── automations/       # Home Assistant automation scripts
-├── dashboards/        # Custom dashboard configurations
+├── automations/
+│   └── motion_sensors/     # Motion detection & security automations
+│       ├── motion_detection_when_away.yaml
+│       └── README.md
+└── dashboard/              # Custom dashboard configurations
+    └── motion-sensors-dashboard/
 ```
+
+## Automations
+
+### 🔒 Motion Detection Security System
+**Location:** `automations/motion_sensors/`
+
+A comprehensive Home Assistant automation that sends notifications when motion is detected while your alarm system is set to "away" mode.
+
+**Features:**
+- ✅ Multi-sensor support (Camera, PIR, Aqara occupancy sensors)
+- ✅ Smart notifications with sensor location and timestamp  
+- ✅ Optional security lighting activation
+- ✅ Parallel processing for multiple simultaneous detections
+- ✅ Comprehensive logging and high-priority alerts
+
+**Setup:** Replace entity IDs with your sensors, configure alarm system condition, and set up notification service. See `automations/motion_sensors/README.md` for detailed instructions.
+
+**Compatible with:** All motion sensor types, camera motion detection, Aqara occupancy sensors, any alarm system integration.
 
 ## Features
 
-- **AI-Generated Automations**: Smart automation scripts that learn from patterns and optimize home behavior
-- **Custom Dashboard Scripts**: Enhanced UI components and layouts for Home Assistant dashboards
+- **Security Automations**: Motion detection and alert systems for home security
+- **Custom Dashboard Scripts**: Enhanced UI components for motion sensor monitoring
+- **Template-Ready**: All automations sanitized and ready for public use
 
 ## Contributing
 
