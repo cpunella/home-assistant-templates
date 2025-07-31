@@ -17,7 +17,6 @@
 #########################################################################
 
 id: motion_detection_when_away
-alias: "Motion Detection When Away - Template"
 description: "Send notification when motion is detected and alarm is set to away mode"
 
 trigger:
