@@ -1,0 +1,462 @@
+views:
+  - title: Temperature Sensors
+    icon: mdi:thermometer
+    panel: false
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mushroom-template-card
+            primary: Temperature Sensors
+            secondary: >-
+              {{ states.sensor | selectattr('attributes.device_class', 'eq', 'temperature')
+              | selectattr('state', 'ne', 'unavailable') | list | length }} Active
+            icon: mdi:thermometer
+            icon_color: blue
+            card_mod:
+              style: |
+                ha-card {
+                  --ha-card-background: rgba(var(--rgb-primary-color), 0.1);
+                }
+          - type: custom:mushroom-template-card
+            primary: Average Indoor
+            secondary: >-
+              {% set indoor_temps = [
+                states('sensor.temp_kitchen') | float(0),
+                states('sensor.temp_living_room_sofa') | float(0),
+                states('sensor.temp_living_room_tv') | float(0),
+                states('sensor.temp_home') | float(0),
+                states('sensor.temp_hallway') | float(0),
+                states('sensor.temp_bathroom_main') | float(0),
+                states('sensor.temp_bathroom_small') | float(0)
+              ] %}
+              {% set valid_temps = indoor_temps | select('>', 0) | list %}
+              {{ (valid_temps | sum / (valid_temps | length if valid_temps | length > 0 else 1)) | round(1) }}°C
+            icon: mdi:home-thermometer
+            icon_color: green
+            card_mod:
+              style: |
+                ha-card {
+                  --ha-card-background: rgba(var(--rgb-green), 0.1);
+                }
+          - type: custom:mushroom-template-card
+            primary: Outdoor
+            secondary: '{{ states(''sensor.temp_outdoor'') }}°C'
+            icon: mdi:thermometer-lines
+            icon_color: orange
+            card_mod:
+              style: |
+                ha-card {
+                  --ha-card-background: rgba(var(--rgb-orange), 0.1);
+                }
+
+      # Temperature Zones Layout
+      - type: custom:layout-card
+        layout_type: masonry
+        layout:
+          width: 350
+          max_cols: 3
+        cards:
+          # Living Room Section
+          - type: custom:mushroom-title-card
+            title: Living Room / Sala
+          - type: custom:mushroom-entity-card
+            entity: sensor.temp_living_room_sofa
+            name: Divano Area
+            icon: mdi:sofa
+            primary_info: state
+            secondary_info: last-changed
+            card_mod:
+              style: |
+                ha-card {
+                  {% set temp = states(config.entity) | float(0) %}
+                  {% if temp > 26 %}
+                    --ha-card-background: rgba(255, 152, 0, 0.1);
+                  {% elif temp < 20 %}
+                    --ha-card-background: rgba(33, 150, 243, 0.1);
+                  {% else %}
+                    --ha-card-background: rgba(76, 175, 80, 0.1);
+                  {% endif %}
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.temp_living_room_tv
+            name: TV Window Area
+            icon: mdi:television
+            primary_info: state
+            secondary_info: last-changed
+            card_mod:
+              style: |
+                ha-card {
+                  {% set temp = states(config.entity) | float(0) %}
+                  {% if temp > 26 %}
+                    --ha-card-background: rgba(255, 152, 0, 0.1);
+                  {% elif temp < 20 %}
+                    --ha-card-background: rgba(33, 150, 243, 0.1);
+                  {% else %}
+                    --ha-card-background: rgba(76, 175, 80, 0.1);
+                  {% endif %}
+                }
+
+          # Kitchen Section
+          - type: custom:mushroom-title-card
+            title: Kitchen / Cucina
+          - type: custom:mushroom-entity-card
+            entity: sensor.temp_kitchen
+            name: Indoor Kitchen
+            icon: mdi:chef-hat
+            primary_info: state
+            secondary_info: last-changed
+            card_mod:
+              style: |
+                ha-card {
+                  {% set temp = states(config.entity) | float(0) %}
+                  {% if temp > 26 %}
+                    --ha-card-background: rgba(255, 152, 0, 0.1);
+                  {% elif temp < 20 %}
+                    --ha-card-background: rgba(33, 150, 243, 0.1);
+                  {% else %}
+                    --ha-card-background: rgba(76, 175, 80, 0.1);
+                  {% endif %}
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.temp_kitchen_balcony
+            name: Kitchen Outdoor
+            icon: mdi:balcony
+            primary_info: state
+            secondary_info: last-changed
+            card_mod:
+              style: |
+                ha-card {
+                  {% set temp = states(config.entity) | float(0) %}
+                  {% if temp > 28 %}
+                    --ha-card-background: rgba(244, 67, 54, 0.1);
+                  {% elif temp < 15 %}
+                    --ha-card-background: rgba(33, 150, 243, 0.1);
+                  {% else %}
+                    --ha-card-background: rgba(255, 193, 7, 0.1);
+                  {% endif %}
+                }
+
+          # Bathroom Section
+          - type: custom:mushroom-title-card
+            title: Bathrooms / Bagni
+          - type: custom:mushroom-entity-card
+            entity: sensor.temp_bathroom_main
+            name: Main Bathroom
+            icon: mdi:shower
+            primary_info: state
+            secondary_info: last-changed
+            card_mod:
+              style: |
+                ha-card {
+                  {% set temp = states(config.entity) | float(0) %}
+                  {% if temp > 26 %}
+                    --ha-card-background: rgba(255, 152, 0, 0.1);
+                  {% elif temp < 20 %}
+                    --ha-card-background: rgba(33, 150, 243, 0.1);
+                  {% else %}
+                    --ha-card-background: rgba(76, 175, 80, 0.1);
+                  {% endif %}
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.temp_bathroom_small
+            name: Small Bathroom
+            icon: mdi:toilet
+            primary_info: state
+            secondary_info: last-changed
+            card_mod:
+              style: |
+                ha-card {
+                  {% set temp = states(config.entity) | float(0) %}
+                  {% if temp > 26 %}
+                    --ha-card-background: rgba(255, 152, 0, 0.1);
+                  {% elif temp < 20 %}
+                    --ha-card-background: rgba(33, 150, 243, 0.1);
+                  {% else %}
+                    --ha-card-background: rgba(76, 175, 80, 0.1);
+                  {% endif %}
+                }
+
+          # Corridor & General Section
+          - type: custom:mushroom-title-card
+            title: Other Areas
+          - type: custom:mushroom-entity-card
+            entity: sensor.temp_hallway
+            name: Hallway
+            icon: mdi:door-open
+            primary_info: state
+            secondary_info: last-changed
+            card_mod:
+              style: |
+                ha-card {
+                  {% set temp = states(config.entity) | float(0) %}
+                  {% if temp > 26 %}
+                    --ha-card-background: rgba(255, 152, 0, 0.1);
+                  {% elif temp < 20 %}
+                    --ha-card-background: rgba(33, 150, 243, 0.1);
+                  {% else %}
+                    --ha-card-background: rgba(76, 175, 80, 0.1);
+                  {% endif %}
+                }
+          - type: custom:mushroom-entity-card
+            entity: sensor.temp_home
+            name: General Indoor
+            icon: mdi:home-thermometer
+            primary_info: state
+            secondary_info: last-changed
+            card_mod:
+              style: |
+                ha-card {
+                  {% set temp = states(config.entity) | float(0) %}
+                  {% if temp > 26 %}
+                    --ha-card-background: rgba(255, 152, 0, 0.1);
+                  {% elif temp < 20 %}
+                    --ha-card-background: rgba(33, 150, 243, 0.1);
+                  {% else %}
+                    --ha-card-background: rgba(76, 175, 80, 0.1);
+                  {% endif %}
+                }
+
+          # Outdoor Section
+          - type: custom:mushroom-title-card
+            title: Outdoor / Esterno
+          - type: custom:mushroom-entity-card
+            entity: sensor.temp_outdoor
+            name: Main Outdoor
+            icon: mdi:weather-partly-cloudy
+            primary_info: state
+            secondary_info: last-changed
+            card_mod:
+              style: |
+                ha-card {
+                  {% set temp = states(config.entity) | float(0) %}
+                  {% if temp > 30 %}
+                    --ha-card-background: rgba(244, 67, 54, 0.1);
+                  {% elif temp < 10 %}
+                    --ha-card-background: rgba(33, 150, 243, 0.1);
+                  {% else %}
+                    --ha-card-background: rgba(255, 193, 7, 0.1);
+                  {% endif %}
+                }
+
+          # Special Sensors
+          - type: custom:mushroom-title-card
+            title: System Sensors
+          - type: custom:mushroom-entity-card
+            entity: sensor.temp_hub
+            name: Control Hub
+            icon: mdi:smoke-detector
+            primary_info: state
+            secondary_info: last-changed
+            card_mod:
+              style: |
+                ha-card {
+                  {% set temp = states(config.entity) | float(0) %}
+                  {% if temp > 35 %}
+                    --ha-card-background: rgba(244, 67, 54, 0.2);
+                  {% elif temp > 30 %}
+                    --ha-card-background: rgba(255, 152, 0, 0.1);
+                  {% else %}
+                    --ha-card-background: rgba(76, 175, 80, 0.1);
+                  {% endif %}
+                }
+
+      # Temperature Comparison Gauge
+      - type: custom:mushroom-title-card
+        title: Temperature Overview
+      - type: horizontal-stack
+        cards:
+          - type: gauge
+            entity: sensor.temp_living_room_device
+            name: Living Room
+            min: 15
+            max: 35
+            needle: true
+            severity:
+              green: 20
+              yellow: 26
+              red: 30
+          - type: gauge
+            entity: sensor.temp_kitchen
+            name: Kitchen
+            min: 15
+            max: 35
+            needle: true
+            severity:
+              green: 20
+              yellow: 26
+              red: 30
+          - type: gauge
+            entity: sensor.temp_outdoor
+            name: Outdoor
+            min: 0
+            max: 40
+            needle: true
+            severity:
+              green: 15
+              yellow: 28
+              red: 32
+
+      # Historical Temperature Graphs
+      - type: custom:mushroom-title-card
+        title: Temperature Trends (24h)
+      - type: custom:mini-graph-card
+        name: Indoor Temperature Comparison
+        hours_to_show: 24
+        points_per_hour: 4
+        line_width: 3
+        smoothing: true
+        animate: true
+        entities:
+          - entity: sensor.temp_kitchen
+            name: Kitchen
+            color: '#ff9800'
+          - entity: sensor.temp_living_room_sofa
+            name: Living Room
+            color: '#4caf50'
+          - entity: sensor.temp_hallway
+            name: Hallway
+            color: '#9c27b0'
+          - entity: sensor.temp_bathroom_main
+            name: Bathroom
+            color: '#2196f3'
+        show:
+          state: true
+          name: true
+          icon: false
+          labels: true
+          points: false
+
+      - type: custom:mini-graph-card
+        name: Indoor vs Outdoor Comparison
+        hours_to_show: 24
+        points_per_hour: 4
+        line_width: 3
+        smoothing: true
+        animate: true
+        entities:
+          - entity: sensor.temp_home
+            name: Indoor Average
+            color: '#4caf50'
+          - entity: sensor.temp_outdoor
+            name: Outdoor
+            color: '#ff5722'
+          - entity: sensor.temp_kitchen_balcony
+            name: Kitchen Outdoor
+            color: '#ff9800'
+        show:
+          state: true
+          name: true
+          icon: false
+          labels: true
+          points: false
+
+      # Temperature Statistics
+      - type: custom:mushroom-title-card
+        title: Temperature Statistics
+      - type: entities
+        title: Current Readings Summary
+        show_header_toggle: false
+        entities:
+          - type: section
+            label: Indoor Temperatures
+          - entity: sensor.temp_kitchen
+            name: Kitchen
+            icon: mdi:chef-hat
+          - entity: sensor.temp_living_room_sofa
+            name: Living Room (Sofa)
+            icon: mdi:sofa
+          - entity: sensor.temp_living_room_tv
+            name: Living Room (TV)
+            icon: mdi:television
+          - entity: sensor.temp_hallway
+            name: Hallway
+            icon: mdi:door-open
+          - entity: sensor.temp_bathroom_main
+            name: Main Bathroom
+            icon: mdi:shower
+          - entity: sensor.temp_bathroom_small
+            name: Small Bathroom
+            icon: mdi:toilet
+          - type: section
+            label: Outdoor Temperatures
+          - entity: sensor.temp_outdoor
+            name: Main Outdoor
+            icon: mdi:weather-partly-cloudy
+          - entity: sensor.temp_kitchen_balcony
+            name: Kitchen Balcony
+            icon: mdi:balcony
+          - type: section
+            label: System Sensors
+          - entity: sensor.temp_hub
+            name: Control Hub
+            icon: mdi:smoke-detector
+
+      # Temperature Alerts/Monitoring
+      - type: conditional
+        conditions:
+          - condition: template
+            value_template: >-
+              {% set high_temp_sensors = [] %}
+              {% for entity in [
+                'sensor.temp_kitchen',
+                'sensor.temp_living_room_sofa',
+                'sensor.temp_living_room_tv',
+                'sensor.temp_hallway',
+                'sensor.temp_bathroom_main',
+                'sensor.temp_bathroom_small',
+                'sensor.temp_home'
+              ] %}
+                {% if states(entity) | float(0) > 28 %}
+                  {% set high_temp_sensors = high_temp_sensors + [entity] %}
+                {% endif %}
+              {% endfor %}
+              {{ high_temp_sensors | length > 0 }}
+        card:
+          type: custom:mushroom-template-card
+          primary: High Temperature Alert!
+          secondary: >-
+            {% set high_temp_sensors = [] %}
+            {% for entity in [
+              'sensor.temp_kitchen',
+              'sensor.temp_living_room_sofa', 
+              'sensor.temp_living_room_tv',
+              'sensor.temp_hallway',
+              'sensor.temp_bathroom_main',
+              'sensor.temp_bathroom_small',
+              'sensor.temp_home'
+            ] %}
+              {% if states(entity) | float(0) > 28 %}
+                {% set high_temp_sensors = high_temp_sensors + [entity] %}
+              {% endif %}
+            {% endfor %}
+            {{ high_temp_sensors | length }} sensor(s) above 28°C
+          icon: mdi:thermometer-alert
+          icon_color: red
+          card_mod:
+            style: |
+              ha-card { --ha-card-background: rgba(244, 67, 54, 0.1); }
+
+      # Temperature & Humidity Correlation
+      - type: custom:mushroom-title-card
+        title: Temperature & Humidity Correlation
+      - type: custom:mini-graph-card
+        name: Climate Comfort Overview
+        hours_to_show: 12
+        points_per_hour: 4
+        line_width: 2
+        smoothing: true
+        entities:
+          - entity: sensor.temp_home
+            name: Temperature
+            color: '#ff5722'
+            y_axis: primary
+          - entity: sensor.humidity_home
+            name: Humidity
+            color: '#2196f3'
+            y_axis: secondary
+        show:
+          state: true
+          name: true
+          icon: false
+          labels: true
+          points: false
