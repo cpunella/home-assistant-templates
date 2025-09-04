@@ -1,0 +1,135 @@
+views:
+  - title: Battery Status
+    icon: mdi:battery-80
+    panel: false
+    cards:
+      # Quick summary chips
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: template
+            icon: mdi:battery
+            icon_color: blue
+            content: >-
+              {% set bat = states.sensor
+                | selectattr('attributes.device_class','eq','battery')
+                | rejectattr('state','in',['unknown','unavailable']) | list %}
+              {{ bat | length }} batteries
+          - type: template
+            icon: mdi:battery-charging-70
+            icon_color: green
+            content: >-
+              {% set vals = states.sensor
+                | selectattr('attributes.device_class','eq','battery')
+                | rejectattr('state','in',['unknown','unavailable'])
+                | map(attribute='state') | map('float') | list %}
+              Avg {{ (vals|sum / (vals|length if vals|length>0 else 1)) | round(0) }}%
+          - type: template
+            icon: mdi:battery-alert
+            icon_color: red
+            content: >-
+              {% set threshold = 20 %}
+              {% set low = states.sensor
+                | selectattr('attributes.device_class','eq','battery')
+                | rejectattr('state','in',['unknown','unavailable'])
+                | selectattr('state','lt', threshold|string) | list %}
+              {{ low | length }} below 20%
+          - type: template
+            icon: mdi:battery-10
+            icon_color: amber
+            content: >-
+              {% set pairs = [] %}
+              {% for s in states.sensor
+                   if s.attributes.device_class=='battery'
+                   and s.state not in ['unknown','unavailable'] %}
+                {% set pairs = pairs + [[ s.state|float(0), s.name ]] %}
+              {% endfor %}
+              {% set lowest = (pairs|sort(attribute=0)|first) if pairs|length>0 else [0,'-'] %}
+              Low {{ lowest[1] }} {{ lowest[0]|round(0) }}%
+
+      - type: custom:mushroom-title-card
+        title: All Batteries (sorted by level)
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Battery Levels
+          show_header_toggle: false
+        filter:
+          include:
+            - domain: sensor
+              attributes:
+                device_class: battery
+          exclude:
+            - state: 'unknown'
+            - state: 'unavailable'
+        sort:
+          method: state
+          numeric: true
+          reverse: false
+        unique: true
+        show_empty: false
+
+      - type: custom:mushroom-title-card
+        title: Low Batteries (<= 20%)
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Replace or charge soon
+          show_header_toggle: false
+        filter:
+          template: |
+            {% for s in states.sensor %}
+            {% if s.attributes.device_class == 'battery' and s.state not in ['unknown','unavailable'] and (s.state | float(0)) <= 20 %}
+            {{ s.entity_id }}
+            {% endif %}
+            {% endfor %}
+        sort:
+          method: state
+          numeric: true
+          reverse: false
+        unique: true
+        show_empty: false
+
+      - type: custom:mushroom-title-card
+        title: Battery Alerts (binary sensors)
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Devices reporting low battery
+          show_header_toggle: false
+        filter:
+          include:
+            - domain: binary_sensor
+              attributes:
+                device_class: battery
+          exclude:
+            - state: 'off'
+        sort:
+          method: name
+        unique: true
+        show_empty: false
+      # Global alert banner when any battery is low (no template condition; uses auto-entities to show only when matches exist)
+      - type: custom:auto-entities
+        card:
+          type: custom:mushroom-template-card
+          primary: Battery Alert
+          secondary: >-
+            {% set threshold = 20 %}
+            {% set low = states.sensor
+              | selectattr('attributes.device_class','eq','battery')
+              | rejectattr('state','in',['unknown','unavailable'])
+              | selectattr('state','lt', threshold|string) | list %}
+            {{ low | length }} sensor(s) at or below 20%
+          icon: mdi:battery-alert
+          icon_color: red
+          card_mod:
+            style: |
+              ha-card { --ha-card-background: rgba(244, 67, 54, 0.1); }
+        filter:
+          template: |
+            {% set threshold = 20 %}
+            {% for s in states.sensor %}
+            {% if s.attributes.device_class == 'battery' and s.state not in ['unknown','unavailable'] and (s.state | float(0)) <= threshold %}
+            {{ s.entity_id }}
+            {% endif %}
+            {% endfor %}
+        show_empty: false

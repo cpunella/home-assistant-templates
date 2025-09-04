@@ -1,0 +1,51 @@
+alias: Battery Low Alert
+description: Send notification when any battery drops below 20%
+trigger:
+  - platform: template
+    value_template: >-
+      {% set threshold = 20 %}
+      {% for state in states.sensor %}
+        {% if state.attributes.device_class is defined and state.attributes.device_class == 'battery' 
+           and state.state not in ['unknown', 'unavailable', 'none'] 
+           and state.state | float(0) < threshold 
+           and state.state | float(0) > 0 %}
+          true
+        {% endif %}
+      {% endfor %}
+variables:
+  low_batteries: >-
+    {% set threshold = 20 %}
+    {% set batteries = namespace(low=[]) %}
+    {% for state in states.sensor %}
+      {% if state.attributes.device_class is defined and state.attributes.device_class == 'battery' 
+         and state.state not in ['unknown', 'unavailable', 'none'] 
+         and state.state | float(0) < threshold 
+         and state.state | float(0) > 0 %}
+        {% set batteries.low = batteries.low + [{'entity_id': state.entity_id, 'name': state.attributes.friendly_name | default(state.entity_id), 'level': state.state | float(0)}] %}
+      {% endif %}
+    {% endfor %}
+    {{ batteries.low }}
+condition:
+  - condition: template
+    value_template: "{{ low_batteries | length > 0 }}"
+action:
+  - repeat:
+      for_each: "{{ low_batteries }}"
+      sequence:
+        - service: notify.notify
+          data:
+            title: "Battery Low Alert"
+            message: >-
+              {{ repeat.item.name }} battery is low at {{ repeat.item.level | round(0) }}%
+            data:
+              tag: "battery-low-{{ repeat.item.entity_id }}"
+              importance: high
+              persistent: true
+              actions:
+                - action: "DISMISS"
+                  title: "Dismiss"
+                - action: "VIEW"
+                  title: "View Dashboard"
+                  uri: "/lovelace/battery-status"
+mode: single
+max_exceeded: silent
