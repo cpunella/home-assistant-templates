@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - Home Assistant AI</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h1 class="brand-title"><a href="../index.html" style="text-decoration: none; color: inherit;">🏠 Home Assistant AI</a></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html#dashboards">Dashboards</a></li>
+                <li><a href="../index.html#automations">Automations</a></li>
+                <li><a href="../index.html#getting-started">Getting Started</a></li>
+                <li><a href="https://github.com/cpunella/homeassistant-ai" class="btn-secondary">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="getting-started-guide">
+            <div class="container">
+                <div class="guide-header">
+                    <h1>Getting Started Guide</h1>
+                    <p>Step-by-step instructions to install and configure your Home Assistant AI components</p>
+                </div>
+
+                <div class="guide-content">
+                    <div class="guide-section">
+                        <h2>Prerequisites</h2>
+                        <div class="requirements-list">
+                            <div class="requirement-item">
+                                <div class="requirement-icon">✅</div>
+                                <div>
+                                    <h3>Home Assistant Core</h3>
+                                    <p>Version 2024.x or newer required for full compatibility</p>
+                                </div>
+                            </div>
+                            <div class="requirement-item">
+                                <div class="requirement-icon">📱</div>
+                                <div>
+                                    <h3>Home Assistant Mobile App</h3>
+                                    <p>For push notifications (iOS/Android)</p>
+                                </div>
+                            </div>
+                            <div class="requirement-item">
+                                <div class="requirement-icon">🔧</div>
+                                <div>
+                                    <h3>Custom Components</h3>
+                                    <p>Some dashboards require custom cards (Mushroom, Button Card, etc.)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guide-section">
+                        <h2>Installation Methods</h2>
+                        
+                        <div class="installation-methods">
+                            <div class="method-card">
+                                <h3>Method 1: Individual Components</h3>
+                                <p>Install dashboards and automations one by one</p>
+                                <ol>
+                                    <li>Browse the component gallery</li>
+                                    <li>Copy the YAML configuration</li>
+                                    <li>Customize entity IDs</li>
+                                    <li>Add to your Home Assistant</li>
+                                </ol>
+                                <div class="method-pros">
+                                    <strong>Best for:</strong> Users who want specific components only
+                                </div>
+                            </div>
+
+                            <div class="method-card">
+                                <h3>Method 2: GitHub Clone</h3>
+                                <p>Get the entire repository for easy updates</p>
+                                <div class="code-block">
+                                    <pre><code>git clone https://github.com/cpunella/homeassistant-ai.git
+cd homeassistant-ai</code></pre>
+                                </div>
+                                <div class="method-pros">
+                                    <strong>Best for:</strong> Users who want all components and easy updates
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guide-section">
+                        <h2>Dashboard Installation</h2>
+                        
+                        <div class="installation-steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h3>Install Required Custom Cards</h3>
+                                    <p>Most dashboards require custom Lovelace cards. Install via HACS:</p>
+                                    <ul>
+                                        <li>Mushroom Cards</li>
+                                        <li>Button Card</li>
+                                        <li>Layout Card</li>
+                                        <li>Auto Entities</li>
+                                        <li>Mini Graph Card</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h3>Copy Dashboard YAML</h3>
+                                    <p>From the website or GitHub repository:</p>
+                                    <div class="code-block">
+                                        <pre><code># Example path
+dashboard/motion-sensors-dashboard/motion-sensors-dashboard.yaml</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h3>Customize Entity IDs</h3>
+                                    <p>Replace template entity IDs with your actual devices:</p>
+                                    <div class="code-block">
+                                        <pre><code># Replace this:
+entity_id: binary_sensor.your_motion_sensor_1
+
+# With your actual entity:
+entity_id: binary_sensor.living_room_motion</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h3>Add to Home Assistant</h3>
+                                    <p>Go to Settings → Dashboards → Add Dashboard → Create new view and paste the YAML</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guide-section">
+                        <h2>Automation Installation</h2>
+                        
+                        <div class="installation-steps">
+                            <div class="step">
+                                <div class="step-number">1</div>
+                                <div class="step-content">
+                                    <h3>Copy Automation YAML</h3>
+                                    <p>Get the automation configuration from the website or repository</p>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">2</div>
+                                <div class="step-content">
+                                    <h3>Update Entity IDs</h3>
+                                    <p>Critical: Replace all template entities with your actual device entities:</p>
+                                    <div class="code-block">
+                                        <pre><code># Motion sensors
+entity_id: binary_sensor.your_camera_motion
+# ↓ Replace with ↓
+entity_id: binary_sensor.front_door_camera_motion
+
+# Alarm system
+entity_id: alarm_control_panel.your_alarm_system
+# ↓ Replace with ↓  
+entity_id: alarm_control_panel.house_alarm</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">3</div>
+                                <div class="step-content">
+                                    <h3>Configure Notification Services</h3>
+                                    <p>Update notification targets:</p>
+                                    <div class="code-block">
+                                        <pre><code># Generic notification
+service: notify.notify
+
+# Mobile app notification
+service: notify.mobile_app_your_phone
+
+# Email notification  
+service: notify.email</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-number">4</div>
+                                <div class="step-content">
+                                    <h3>Add via Home Assistant UI</h3>
+                                    <p>Go to Settings → Automations & Scenes → Create Automation → Skip, edit in YAML</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guide-section">
+                        <h2>Common Customizations</h2>
+                        
+                        <div class="customizations-grid">
+                            <div class="custom-card">
+                                <h3>🔒 Motion Detection</h3>
+                                <div class="custom-content">
+                                    <h4>Required Updates:</h4>
+                                    <ul>
+                                        <li>Motion sensor entity IDs</li>
+                                        <li>Alarm system entity</li>
+                                        <li>Notification service</li>
+                                        <li>Light/area IDs (optional)</li>
+                                    </ul>
+                                    <h4>Optional Features:</h4>
+                                    <ul>
+                                        <li>Security lighting activation</li>
+                                        <li>Multiple notification channels</li>
+                                        <li>Custom trigger conditions</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="custom-card">
+                                <h3>🔋 Battery Monitoring</h3>
+                                <div class="custom-content">
+                                    <h4>Required Updates:</h4>
+                                    <ul>
+                                        <li>Battery sensor entity IDs</li>
+                                        <li>Battery threshold (default: 20%)</li>
+                                        <li>Notification service</li>
+                                        <li>Time restrictions</li>
+                                    </ul>
+                                    <h4>Optional Features:</h4>
+                                    <ul>
+                                        <li>Different thresholds per device</li>
+                                        <li>Persistent notifications</li>
+                                        <li>Maintenance reminders</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="custom-card">
+                                <h3>📊 Dashboards</h3>
+                                <div class="custom-content">
+                                    <h4>Required Updates:</h4>
+                                    <ul>
+                                        <li>Sensor entity IDs</li>
+                                        <li>Device names/friendly names</li>
+                                        <li>Area/room names</li>
+                                        <li>Card titles and labels</li>
+                                    </ul>
+                                    <h4>Optional Customizations:</h4>
+                                    <ul>
+                                        <li>Color schemes</li>
+                                        <li>Graph time periods</li>
+                                        <li>Card layouts</li>
+                                        <li>Additional sensors</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guide-section">
+                        <h2>Troubleshooting</h2>
+                        
+                        <div class="troubleshooting-list">
+                            <div class="trouble-item">
+                                <h3>❌ Automation not triggering</h3>
+                                <div class="trouble-solution">
+                                    <p><strong>Possible causes:</strong></p>
+                                    <ul>
+                                        <li>Incorrect entity IDs</li>
+                                        <li>Condition not met (alarm state, time, etc.)</li>
+                                        <li>Entity unavailable</li>
+                                    </ul>
+                                    <p><strong>Solution:</strong> Check Developer Tools → States to verify entity IDs and states</p>
+                                </div>
+                            </div>
+
+                            <div class="trouble-item">
+                                <h3>📱 Notifications not working</h3>
+                                <div class="trouble-solution">
+                                    <p><strong>Possible causes:</strong></p>
+                                    <ul>
+                                        <li>Incorrect notification service</li>
+                                        <li>Mobile app not configured</li>
+                                        <li>Do Not Disturb mode</li>
+                                    </ul>
+                                    <p><strong>Solution:</strong> Test notification service in Developer Tools → Services</p>
+                                </div>
+                            </div>
+
+                            <div class="trouble-item">
+                                <h3>🎨 Dashboard cards not showing</h3>
+                                <div class="trouble-solution">
+                                    <p><strong>Possible causes:</strong></p>
+                                    <ul>
+                                        <li>Custom cards not installed</li>
+                                        <li>Entity IDs don't exist</li>
+                                        <li>YAML syntax errors</li>
+                                    </ul>
+                                    <p><strong>Solution:</strong> Check Configuration → Logs for YAML errors</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="guide-section">
+                        <h2>Need Help?</h2>
+                        
+                        <div class="help-links">
+                            <a href="https://github.com/cpunella/homeassistant-ai/issues" class="help-link">
+                                <div class="help-icon">🐛</div>
+                                <div>
+                                    <h3>Report Issues</h3>
+                                    <p>Found a bug or have suggestions? Open a GitHub issue</p>
+                                </div>
+                            </a>
+
+                            <a href="https://community.home-assistant.io/" class="help-link">
+                                <div class="help-icon">💬</div>
+                                <div>
+                                    <h3>Community Forum</h3>
+                                    <p>Get help from the Home Assistant community</p>
+                                </div>
+                            </a>
+
+                            <a href="https://www.home-assistant.io/docs/" class="help-link">
+                                <div class="help-icon">📚</div>
+                                <div>
+                                    <h3>Home Assistant Docs</h3>
+                                    <p>Official documentation and guides</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/cpunella/homeassistant-ai">GitHub Repository</a></li>
+                        <li><a href="../index.html#getting-started">Quick Start</a></li>
+                        <li><a href="https://home-assistant.io">Home Assistant</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Components</h4>
+                    <ul>
+                        <li><a href="../index.html#dashboards">Dashboard Gallery</a></li>
+                        <li><a href="../index.html#automations">Smart Automations</a></li>
+                        <li><a href="getting-started.html">Setup Guides</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <p>AI-generated Home Assistant configurations designed to enhance your smart home experience with intelligent automation and beautiful dashboards.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Home Assistant AI. Open source under MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .getting-started-guide {
+            padding: 2rem 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .guide-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .guide-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .guide-header p {
+            font-size: 1.125rem;
+            color: #64748b;
+        }
+
+        .guide-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .guide-section {
+            margin-bottom: 3rem;
+            background: #fff;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .guide-section h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .requirements-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+        }
+
+        .requirement-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .requirement-item h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .requirement-item p {
+            color: #64748b;
+            font-size: 0.925rem;
+        }
+
+        .installation-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .method-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .method-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .method-card p {
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .method-card ol {
+            color: #64748b;
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        .method-pros {
+            color: #059669;
+            font-size: 0.925rem;
+        }
+
+        .installation-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .step-number {
+            background: #0369a1;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .step-content h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content ul {
+            color: #64748b;
+            padding-left: 1.5rem;
+        }
+
+        .code-block {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.875rem;
+            color: #1e293b;
+        }
+
+        .customizations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .custom-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .custom-card h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .custom-content h4 {
+            font-size: 0.975rem;
+            font-weight: 600;
+            color: #475569;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .custom-content h4:first-child {
+            margin-top: 0;
+        }
+
+        .custom-content ul {
+            color: #64748b;
+            font-size: 0.925rem;
+            padding-left: 1.5rem;
+        }
+
+        .troubleshooting-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .trouble-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+
+        .trouble-item h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .trouble-solution p {
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .trouble-solution ul {
+            color: #64748b;
+            font-size: 0.925rem;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .trouble-solution strong {
+            color: #475569;
+        }
+
+        .help-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .help-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            border: 1px solid #e2e8f0;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .help-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -5px rgb(0 0 0 / 0.1);
+        }
+
+        .help-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .help-link h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .help-link p {
+            color: #64748b;
+            font-size: 0.925rem;
+        }
+
+        @media (max-width: 768px) {
+            .installation-methods,
+            .customizations-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .step-number {
+                margin: 0 auto 1rem;
+            }
+        }
+    </style>
+</body>
+</html>
