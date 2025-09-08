@@ -464,8 +464,10 @@ function initializeSearch() {
         
         // Analytics: Track searches (debounced)
         if (window.va && currentSearchTerm.length > 2) {
-            clearTimeout(window.searchTimeout);
-            window.searchTimeout = setTimeout(() => {
+            if (window.searchTimeoutId) {
+                clearTimeout(window.searchTimeoutId);
+            }
+            window.searchTimeoutId = setTimeout(() => {
                 window.va('track', 'Search', { query: currentSearchTerm });
             }, 1000);
         }
