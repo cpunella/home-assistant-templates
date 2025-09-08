@@ -250,6 +250,11 @@ function showYaml(type) {
     content.textContent = yamlConfigurations[type];
     
     modal.style.display = 'block';
+    
+    // Analytics: Track template views
+    if (window.va) {
+        window.va('track', 'Template Viewed', { template: type, type: 'dashboard' });
+    }
 }
 
 function showAutomationYaml(type) {
@@ -261,6 +266,11 @@ function showAutomationYaml(type) {
     content.textContent = automationConfigurations[type];
     
     modal.style.display = 'block';
+    
+    // Analytics: Track automation views
+    if (window.va) {
+        window.va('track', 'Template Viewed', { template: type, type: 'automation' });
+    }
 }
 
 function showFlow(type) {
@@ -295,6 +305,10 @@ function copyConfig(type) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
             showCopySuccess();
+            // Analytics: Track template copies
+            if (window.va) {
+                window.va('track', 'Template Copied', { template: type, type: 'dashboard' });
+            }
         }).catch(() => {
             fallbackCopyTextToClipboard(text);
         });
@@ -447,6 +461,14 @@ function initializeSearch() {
     searchInput.addEventListener('input', (e) => {
         currentSearchTerm = e.target.value.toLowerCase();
         filterTemplates();
+        
+        // Analytics: Track searches (debounced)
+        if (window.va && currentSearchTerm.length > 2) {
+            clearTimeout(window.searchTimeout);
+            window.searchTimeout = setTimeout(() => {
+                window.va('track', 'Search', { query: currentSearchTerm });
+            }, 1000);
+        }
     });
 
     // Type filter handlers
@@ -530,6 +552,10 @@ function copyAutomationConfig(type) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(() => {
             showCopySuccess();
+            // Analytics: Track automation copies
+            if (window.va) {
+                window.va('track', 'Template Copied', { template: type, type: 'automation' });
+            }
         }).catch(() => {
             fallbackCopyTextToClipboard(text);
         });
