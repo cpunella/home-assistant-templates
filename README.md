@@ -6,17 +6,16 @@ This repository contains AI-generated automations and dashboard scripts for Home
 
 This project leverages AI to create intelligent automation scripts and custom dashboard configurations for Home Assistant installations. The goal is to provide sophisticated home automation solutions that adapt to user behaviors and preferences.
 
-## Repository Structure
+## What's Included
 
-```
-homeassistant-ai/
-├── automations/
-│   └── motion_sensors/     # Motion detection & security automations
-│       ├── motion_detection_when_away.yaml
-│       └── README.md
-└── dashboard/              # Custom dashboard configurations
-    └── motion-sensors-dashboard/
-```
+### 🤖 Automations
+- **🔒 Motion Detection Security** - Smart notifications when motion detected during away mode
+- **🔋 Battery Monitoring** - Proactive low battery alerts for all devices
+
+### 📊 Dashboards
+- **📊 Motion Sensors Dashboard** - Real-time motion detection monitoring and history
+- **🔋 Battery Status Dashboard** - Centralized battery level tracking and alerts
+- **🌡️ Temperature Sensors Dashboard** - Room temperature monitoring with trends
 
 ## Automations
 
@@ -32,14 +31,39 @@ A comprehensive Home Assistant automation that sends notifications when motion i
 - ✅ Parallel processing for multiple simultaneous detections
 - ✅ Comprehensive logging and high-priority alerts
 
-**Setup:** Replace entity IDs with your sensors, configure alarm system condition, and set up notification service. See `automations/motion_sensors/README.md` for detailed instructions.
+### 🔋 Battery Monitoring System
+**Location:** `automations/battery/`
 
-**Compatible with:** All motion sensor types, camera motion detection, Aqara occupancy sensors, any alarm system integration.
+Smart battery monitoring automation that tracks device battery levels and sends proactive notifications when batteries need replacement.
+
+**Features:**
+- ✅ Configurable battery level thresholds
+- ✅ Device-specific notifications with battery percentage
+- ✅ Smart filtering to avoid notification spam
+- ✅ Support for all battery-powered Home Assistant devices
+
+## Dashboards
+
+### 📊 Motion Sensors Dashboard
+**Location:** `dashboard/motion-sensors-dashboard/`
+
+Comprehensive dashboard for monitoring motion detection across your home with real-time status and historical data visualization.
+
+### 🔋 Battery Status Dashboard
+**Location:** `dashboard/battery-status-dashboard/`
+
+Centralized battery monitoring dashboard showing current battery levels, low battery alerts, and maintenance schedules for all battery-powered devices.
+
+### 🌡️ Temperature Sensors Dashboard
+**Location:** `dashboard/temperature-sensors-dashboard/`
+
+Temperature monitoring dashboard with trend visualization, room-by-room temperature tracking, and climate control insights.
 
 ## Features
 
 - **Security Automations**: Motion detection and alert systems for home security
-- **Custom Dashboard Scripts**: Enhanced UI components for motion sensor monitoring
+- **Battery Management**: Proactive battery monitoring and replacement notifications
+- **Custom Dashboard Scripts**: Enhanced UI components for comprehensive home monitoring
 - **Template-Ready**: All automations sanitized and ready for public use
 
 ## Contributing
